@@ -22,7 +22,7 @@ LLM, then restores the original values in the structured response the LLM return
 ## The problem
 
 You want to use a cloud LLM (Claude, GPT, Mistral, Gemini...) to process text
-documents — order acknowledgements, invoices, business emails, contracts — but
+documents - order acknowledgements, invoices, business emails, contracts - but
 those documents contain personal or confidential data that must never leave
 your infrastructure in clear text.
 
@@ -34,10 +34,10 @@ RAW DOCUMENT  ──▶  [ Carnaval ]  ──▶  MASKED DOCUMENT  ──▶  Cl
 FINAL DOCUMENT  ◀──  [ Carnaval ]  ◀──  JSON / XML response  ◀──┘
 ```
 
-1. **Before sending** — sensitive entities are replaced with placeholders such
+1. **Before sending** - sensitive entities are replaced with placeholders such
    as `[PERSON_1]`, `[EMAIL_2]`, `[ORG]`. The placeholder ↔ real-value mapping
    is stored in an **encrypted local vault**.
-2. **After the response** — the original values are re-injected into the JSON
+2. **After the response** - the original values are re-injected into the JSON
    or XML structure returned by the LLM.
 
 No data ever leaves your machine in clear text, and the LLM still receives a
@@ -47,24 +47,24 @@ coherent, structured document it can reason about.
 
 ## Key features
 
-- **Reversible** — every masked entity maps to a unique placeholder; the mapping
+- **Reversible** - every masked entity maps to a unique placeholder; the mapping
   lives in an AES-256-GCM encrypted vault.
-- **Coherent** — the same value always receives the same placeholder within a
+- **Coherent** - the same value always receives the same placeholder within a
   run, so the LLM can reason about cross-references.
-- **Local-first** — no network calls to anonymize. The optional neural model
+- **Local-first** - no network calls to anonymize. The optional neural model
   runs on your own machine.
-- **9 entity types** — `PERSON`, `ORGANIZATION`, `LOCATION`, `EMAIL`, `PHONE`,
+- **9 entity types** - `PERSON`, `ORGANIZATION`, `LOCATION`, `EMAIL`, `PHONE`,
   `IBAN`, `BIC`, `VAT`, `SIREN`/`SIRET`, `URL`.
-- **Layered detection** — regex recognizers, deny lists, bundled dictionaries
+- **Layered detection** - regex recognizers, deny lists, bundled dictionaries
   (GeoNames cities, first names), and an optional zero-shot neural recognizer
   (GLiNER).
-- **Multilingual** — 6 languages: French, English, German, Spanish, Italian,
+- **Multilingual** - 6 languages: French, English, German, Spanish, Italian,
   Portuguese.
-- **Business profiles** — `acknowledge`, `invoice`, `email`, plus private
+- **Business profiles** - `acknowledge`, `invoice`, `email`, plus private
   per-client profiles kept out of version control.
-- **8 output formats** — TXT, JSON, JSONL, XML, CoNLL, HTML, encrypted vault,
-  audit metadata — all produced in a single pass.
-- **CLI and library** — use the `anonymize.py` / `reinject.py` scripts, or
+- **8 output formats** - TXT, JSON, JSONL, XML, CoNLL, HTML, encrypted vault,
+  audit metadata - all produced in a single pass.
+- **CLI and library** - use the `anonymize.py` / `reinject.py` scripts, or
   import `carnaval` directly into your Python code.
 
 ---
@@ -122,7 +122,7 @@ CARNAVAL_VAULT_PASSWORD=a-strong-randomly-generated-secret
 
 ---
 
-## Quickstart — CLI
+## Quickstart - CLI
 
 ```bash
 # 1. Anonymize a document
@@ -143,7 +143,7 @@ Useful flags: `--no-gliner` (regex + deny lists only, faster),
 
 ---
 
-## Quickstart — Python API
+## Quickstart - Python API
 
 ```python
 from pathlib import Path
@@ -192,7 +192,7 @@ The placeholder ↔ value mapping is stored in an encrypted vault:
 | Key derivation | PBKDF2-HMAC-SHA256, 600,000 iterations |
 | Salt | 16 random bytes per file |
 | Nonce | 16 random bytes per file |
-| Integrity tag | 16 bytes — any tampering is detected on read |
+| Integrity tag | 16 bytes - any tampering is detected on read |
 
 Without the password, the vault is unreadable. Carnaval makes **no outbound
 network calls** once the GLiNER model has been downloaded, and its structured
@@ -229,7 +229,7 @@ pytest --cov=src/carnaval    # with coverage
 
 The complete reference lives in the **[project wiki](wiki/Home.md)**:
 
-- [Home](wiki/Home.md) — overview and table of contents
+- [Home](wiki/Home.md) - overview and table of contents
 - [Installation](wiki/Installation.md)
 - [Quickstart](wiki/Quickstart.md)
 - [Architecture](wiki/Architecture.md)
@@ -248,7 +248,7 @@ The original design notes are kept under [`docs/`](docs/).
 
 ## Contributing
 
-Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) and our
+Contributions are welcome - see [CONTRIBUTING.md](CONTRIBUTING.md) and our
 [Code of Conduct](CODE_OF_CONDUCT.md). Please use only fictitious entities
 (Acme Corp, Globex, Jane Doe, Springfield...) in public fixtures and examples.
 
@@ -256,7 +256,7 @@ Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) and our
 
 - General questions, conduct reports: **carnaval.oss@gmail.com**
 - Bug reports and feature requests: GitHub issues
-- Security vulnerabilities: please **do not** open a public issue — see
+- Security vulnerabilities: please **do not** open a public issue - see
   [SECURITY.md](SECURITY.md) for responsible disclosure.
 
 ## License
