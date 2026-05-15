@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
+  <a href="https://doi.org/10.5281/zenodo.20219604"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.20219604.svg" alt="DOI"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+">
   <img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" alt="Tests">
   <img src="https://img.shields.io/badge/status-functional%20POC-orange.svg" alt="Status">
@@ -258,6 +259,16 @@ Contributions are welcome - see [CONTRIBUTING.md](CONTRIBUTING.md) and our
 - Bug reports and feature requests: GitHub issues
 - Security vulnerabilities: please **do not** open a public issue - see
   [SECURITY.md](SECURITY.md) for responsible disclosure.
+
+## Citation
+
+If you use Carnaval in your work, please cite it via its archived DOI:
+
+> Patrice AUBERT. *Carnaval: a reversible PII anonymization framework.*
+> 2026. DOI: [10.5281/zenodo.20219604](https://doi.org/10.5281/zenodo.20219604)
+
+A machine-readable [`CITATION.cff`](CITATION.cff) is included - GitHub turns it
+into a **"Cite this repository"** button.
 
 ## License
 

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Carnaval: a reversible PII anonymization framework"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - family-names: AUBERT
+    given-names: Patrice
+repository-code: "https://github.com/Okapi49/carnaval"
+abstract: >-
+  Carnaval is an open-source Python framework for reversible PII
+  anonymization. It masks sensitive entities in text documents before
+  they are sent to a cloud LLM, then restores the original values in the
+  structured response, using a local AES-256-GCM encrypted vault.
+keywords:
+  - pii
+  - anonymization
+  - privacy
+  - gdpr
+  - nlp
+  - named-entity-recognition
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-05-16
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20219604
+    description: Archived release v0.1.0 on Zenodo
