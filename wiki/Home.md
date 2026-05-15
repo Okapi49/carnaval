@@ -1,9 +1,19 @@
-Wiki# Carnaval Wiki
+<p align="center">
+  <img src="../assets/carnaval-mask.svg" width="200" alt="Carnaval mask">
+</p>
 
-Welcome to the **Carnaval** wiki - the reference documentation for the
-reversible PII anonymization framework.
+<h1 align="center">Carnaval Wiki</h1>
 
-> *The art of the mask: hide the identity, keep the meaning.*
+<p align="center"><em>The art of the mask &mdash; hide the identity, keep the meaning.</em></p>
+
+Welcome! This wiki is the complete guide to **Carnaval**, the reversible
+PII anonymization framework.
+
+**New here?** In one sentence: Carnaval lets you use a cloud AI on your
+documents *without* handing it the names, addresses or bank details they
+contain — it puts a mask on the sensitive data, and lifts it once the AI has
+answered. Curious? The **[Quickstart](Quickstart.md)** gets you running in
+five minutes.
 
 ## What is Carnaval?
 

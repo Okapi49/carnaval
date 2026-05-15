@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Carnaval mask">
+  <title>Carnaval</title>
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a45c9"/>
+      <stop offset="0.55" stop-color="#9c2f9e"/>
+      <stop offset="1" stop-color="#b62d72"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7da7a"/>
+      <stop offset="0.5" stop-color="#e8b53d"/>
+      <stop offset="1" stop-color="#c98a1f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rayons / pointes festives derriere le masque -->
+  <g fill="url(#gold)" opacity="0.9">
+    <path d="M240 26 L228 86 L252 86 Z"/>
+    <path d="M150 40 L168 92 L192 80 Z"/>
+    <path d="M330 40 L312 92 L288 80 Z"/>
+    <path d="M70 86 L116 110 L128 86 Z"/>
+    <path d="M410 86 L364 110 L352 86 Z"/>
+  </g>
+
+  <!-- Corps du masque, yeux evides (fill-rule evenodd) -->
+  <path fill="url(#body)" stroke="url(#gold)" stroke-width="5" fill-rule="evenodd"
+        d="M240 80
+           C 280 52 320 48 360 56
+           C 410 66 442 97 448 142
+           C 452 182 432 217 390 226
+           C 351 234 313 214 283 198
+           C 263 188 251 198 240 207
+           C 229 198 217 188 197 198
+           C 167 214 129 234 90 226
+           C 48 217 28 182 32 142
+           C 38 97 70 66 120 56
+           C 160 48 200 52 240 80 Z
+           M 320 140 a 47 31 0 1 0 94 0 a 47 31 0 1 0 -94 0 Z
+           M 66 140 a 47 31 0 1 0 94 0 a 47 31 0 1 0 -94 0 Z"/>
+
+  <!-- Contour dore des yeux -->
+  <g fill="none" stroke="url(#gold)" stroke-width="4">
+    <ellipse cx="367" cy="140" rx="47" ry="31"/>
+    <ellipse cx="113" cy="140" rx="47" ry="31"/>
+  </g>
+
+  <!-- Volutes dorees sur le front -->
+  <g fill="none" stroke="url(#gold)" stroke-width="4" stroke-linecap="round">
+    <path d="M240 92 C 268 74 300 72 326 84"/>
+    <path d="M240 92 C 212 74 180 72 154 84"/>
+    <path d="M300 110 C 318 102 338 104 352 116"/>
+    <path d="M180 110 C 162 102 142 104 128 116"/>
+  </g>
+
+  <!-- Perles dorees -->
+  <g fill="url(#gold)">
+    <circle cx="240" cy="98" r="6"/>
+    <circle cx="288" cy="86" r="4"/>
+    <circle cx="192" cy="86" r="4"/>
+    <circle cx="336" cy="100" r="4"/>
+    <circle cx="144" cy="100" r="4"/>
+  </g>
+
+  <!-- Larmes decoratives sous les yeux -->
+  <g fill="url(#gold)">
+    <path d="M367 178 C 372 188 372 196 367 204 C 362 196 362 188 367 178 Z"/>
+    <path d="M113 178 C 118 188 118 196 113 204 C 108 196 108 188 113 178 Z"/>
+  </g>
+</svg>

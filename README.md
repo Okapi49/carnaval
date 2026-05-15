@@ -1,11 +1,17 @@
-# Carnaval
+<p align="center">
+  <img src="assets/carnaval-mask.svg" width="240" alt="Carnaval mask">
+</p>
 
-> *The art of the mask: hide the identity, keep the meaning.*
+<h1 align="center">Carnaval</h1>
 
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#testing)
-[![Status: POC](https://img.shields.io/badge/status-functional%20POC-orange.svg)](#project-status)
+<p align="center"><em>The art of the mask &mdash; hide the identity, keep the meaning.</em></p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
+  <img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/status-functional%20POC-orange.svg" alt="Status">
+</p>
 
 **Carnaval** is an open-source Python framework for **reversible PII anonymization**.
 It masks sensitive entities in text documents *before* they are sent to a cloud
