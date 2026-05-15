@@ -1,0 +1,18 @@
+# Normalise les fins de ligne : LF partout dans le depot (convention OSS).
+* text=auto eol=lf
+
+# Sources et configuration : LF explicite.
+*.py    text eol=lf
+*.md    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.toml  text eol=lf
+*.txt   text eol=lf
+*.cfg   text eol=lf
+*.ini   text eol=lf
+
+# Fichiers binaires : pas de conversion.
+*.enc   binary
+*.png   binary
+*.jpg   binary
+*.pdf   binary

@@ -1,0 +1,11 @@
+# Toponymes specifiques a masquer (sites, villes, quartiers sensibles
+# uniquement dans VOTRE contexte).
+#
+# EXEMPLE FICTIF. Remplacez par les lieux reels lies a votre activite :
+# commune de votre usine, quartier de votre siege, zones de livraison...
+
+places:
+  - "Springfield"
+  - "Main Street"
+  - "Sample County"
+  - "Springfield Industrial Park"

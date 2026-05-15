@@ -1,0 +1,31 @@
+# Profil PRIVE EXEMPLE : Accuse de reception fournisseur
+#
+# Ceci est un MODELE entierement fictif. Copiez ce dossier sous un nouveau
+# nom (ex: profiles_private/mon_entreprise/) et remplacez les donnees par
+# vos vraies valeurs. Le dossier profiles_private/ n'est PAS versionne
+# (voir .gitignore) -> vos donnees reelles restent locales.
+profile:
+  name: example_acknowledge
+  description: |
+    Variante PRIVEE du profil public `acknowledge`. Sert a anonymiser les
+    accuses de reception fournisseur avec VOS deny lists reelles (vrais
+    noms d'entreprise, contacts, adresses) sans les exposer dans un repo
+    public. Ici toutes les valeurs sont fictives a titre d'illustration.
+  language: fr
+  expected_entities:
+    - PERSON
+    - ORGANIZATION
+    - EMAIL
+    - PHONE
+    - LOCATION
+    - IBAN
+    - BIC
+    - VAT
+    - SIRET
+    - SIREN
+  preserve:
+    - order_numbers
+    - product_references
+    - amounts
+    - customs_codes
+    - dates

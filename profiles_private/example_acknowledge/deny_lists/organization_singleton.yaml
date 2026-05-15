@@ -1,0 +1,15 @@
+# Entite "mere" unique a anonymiser : VOTRE entreprise.
+# Toutes les variantes pointent vers le placeholder unique [ORG].
+#
+# EXEMPLE FICTIF. Remplacez "Acme Corp" par le nom reel de votre societe
+# et listez toutes les variantes rencontrees dans vos documents (casse,
+# abreviations, formes juridiques, versions collees sans espace...).
+
+organization_singleton:
+  - "Acme Corp"
+  - "Acme Corporation"
+  - "ACME CORP"
+  - "Acme Corp."
+  - "Acme Corp SAS"
+  - "ACMECORP"
+  - "Acme"

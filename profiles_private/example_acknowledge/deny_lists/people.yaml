@@ -1,0 +1,10 @@
+# Contacts commerciaux reels recurrents a masquer.
+#
+# EXEMPLE FICTIF. Remplacez par les noms de vos vrais interlocuteurs.
+
+people:
+  - "Jane Doe"
+  - "John Doe"
+  - "Jane Smith"
+  - "Mary Major"
+  - "Richard Roe"

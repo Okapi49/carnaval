@@ -1,0 +1,36 @@
+# Virtual env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local data
+.env
+inbox/*
+!inbox/.gitkeep
+!inbox/README.md
+outbox/**/*
+!outbox/**/.gitkeep
+
+# Profils prives : tout est ignore SAUF le README et le modele
+# example_acknowledge/ livre comme reference a copier.
+profiles_private/*
+!profiles_private/README.md
+!profiles_private/.gitkeep
+!profiles_private/example_acknowledge/
+!profiles_private/example_acknowledge/**
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Dist
+dist/
+build/
+*.egg-info/

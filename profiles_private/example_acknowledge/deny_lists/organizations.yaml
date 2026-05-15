@@ -1,0 +1,24 @@
+# Fournisseurs reels a masquer.
+#
+# EXEMPLE FICTIF. Remplacez par la liste de vos vrais fournisseurs.
+# Listez les variantes courantes (forme juridique, abreviations).
+
+organizations:
+  - "Globex Industries"
+  - "Globex Industries GmbH"
+  - "GLOBEX"
+
+  - "SupplierOne"
+  - "SupplierOne S.A.S."
+
+  - "ExampleCorp"
+  - "ExampleCorp Ltd"
+
+  - "SupplierTwo Systems"
+  - "SupplierTwo"
+
+supplier_domains:
+  - "globex.example"
+  - "supplierone.example"
+  - "examplecorp.example"
+  - "suppliertwo.example"
