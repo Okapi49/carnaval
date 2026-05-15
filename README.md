@@ -30,7 +30,7 @@ your infrastructure in clear text.
 
 ```
 RAW DOCUMENT  ──▶  [ Carnaval ]  ──▶  MASKED DOCUMENT  ──▶  Cloud LLM
-                                                                │
+                                                                  │
 FINAL DOCUMENT  ◀──  [ Carnaval ]  ◀──  JSON / XML response  ◀──┘
 ```
 
