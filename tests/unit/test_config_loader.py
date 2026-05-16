@@ -55,7 +55,7 @@ class TestDeepMerge:
 
 @pytest.fixture
 def fake_repo(tmp_path: Path) -> Path:
-    """Cree une mini-arborescence repo avec config/ et profiles/ pour tests."""
+    """Cree une mini-arborescence config/ + profiles/ + profiles_private/."""
     # config/ base
     (tmp_path / "config").mkdir()
     (tmp_path / "config" / "pipeline.yaml").write_text(
@@ -95,23 +95,33 @@ def fake_repo(tmp_path: Path) -> Path:
     return tmp_path
 
 
+def _load(repo: Path, **kwargs) -> Config:
+    """Appelle load_config en pointant vers l'arborescence de test `repo`."""
+    return load_config(
+        base_dir=repo / "config",
+        profiles_dir=repo / "profiles",
+        private_dir=repo / "profiles_private",
+        **kwargs,
+    )
+
+
 class TestLoadConfigLayers:
     def test_base_only(self, fake_repo: Path):
-        cfg = load_config(repo_root=fake_repo)
+        cfg = _load(fake_repo)
         assert cfg.raw["pipeline"]["language"] == "fr"
         assert cfg.deny_lists["organizations"]["organizations"] == ["Acme", "Globex"]
         assert cfg.layers == [f"base:{fake_repo / 'config'}"]
 
     def test_with_profile(self, fake_repo: Path):
-        cfg = load_config(repo_root=fake_repo, profile="acknowledge")
+        cfg = _load(fake_repo, profile="acknowledge")
         # Les listes doivent etre concatenees
         orgs = cfg.deny_lists["organizations"]["organizations"]
         assert orgs == ["Acme", "Globex", "Initech"]
         assert "profile:acknowledge" in cfg.layers
 
     def test_with_private_profile(self, fake_repo: Path):
-        cfg = load_config(
-            repo_root=fake_repo,
+        cfg = _load(
+            fake_repo,
             profile="acknowledge",
             private_profile="custom",
         )
@@ -121,16 +131,14 @@ class TestLoadConfigLayers:
 
     def test_missing_profile_raises(self, fake_repo: Path):
         with pytest.raises(FileNotFoundError):
-            load_config(repo_root=fake_repo, profile="nonexistent")
+            _load(fake_repo, profile="nonexistent")
 
     def test_missing_private_profile_raises(self, fake_repo: Path):
         with pytest.raises(FileNotFoundError):
-            load_config(
-                repo_root=fake_repo, profile="acknowledge", private_profile="nope"
-            )
+            _load(fake_repo, profile="acknowledge", private_profile="nope")
 
     def test_get_dotted_path(self, fake_repo: Path):
-        cfg = load_config(repo_root=fake_repo)
+        cfg = _load(fake_repo)
         assert cfg.get("pipeline.language") == "fr"
         assert cfg.get("pipeline.threshold") == 0.4
         assert cfg.get("does.not.exist") is None

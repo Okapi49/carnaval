@@ -25,20 +25,8 @@ from pathlib import Path
 
 from carnaval.recognizers.base import build_alternation_pattern
 
-_ASSETS_DIR_CACHE: Path | None = None
-
-
-def _assets_dir() -> Path:
-    """Renvoie le chemin assets/dictionaries/ relatif au repo Carnaval."""
-    global _ASSETS_DIR_CACHE
-    if _ASSETS_DIR_CACHE is None:
-        # assets/dictionaries/ est au niveau racine du repo Carnaval :
-        # src/carnaval/recognizers/dictionary/_loader.py
-        # -> parents[4] = repo Carnaval
-        _ASSETS_DIR_CACHE = (
-            Path(__file__).resolve().parents[4] / "assets" / "dictionaries"
-        )
-    return _ASSETS_DIR_CACHE
+# Dictionnaires livres avec le paquet : src/carnaval/data/dictionaries/
+_DICT_DIR = Path(__file__).resolve().parents[2] / "data" / "dictionaries"
 
 
 def load_entries(category: str, language: str) -> list[str]:
@@ -51,7 +39,7 @@ def load_entries(category: str, language: str) -> list[str]:
     Returns:
         Liste de chaines (vide si fichier absent).
     """
-    path = _assets_dir() / category / f"{language}.txt"
+    path = _DICT_DIR / category / f"{language}.txt"
     if not path.exists():
         return []
     with open(path, encoding="utf-8") as f:
@@ -68,7 +56,7 @@ def load_stoplist(category: str) -> set[str]:
     Exemple : 'Marie' / 'Pierre' sont a la fois des prenoms et des noms
     communs. On les exclut du dictionnaire pour eviter les faux positifs.
     """
-    path = _assets_dir() / category / "_stoplist.txt"
+    path = _DICT_DIR / category / "_stoplist.txt"
     if not path.exists():
         return set()
     with open(path, encoding="utf-8") as f:

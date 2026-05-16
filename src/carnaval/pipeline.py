@@ -34,7 +34,6 @@ def run_anonymization(
     gliner_threshold: float = 0.4,
     cleanup_pipes: bool = False,
     language: str | None = None,
-    repo_root: Path | str | None = None,
 ) -> tuple[MaskedDocument, WrittenOutput, Config]:
     """Pipeline complet S1 -> S6.
 
@@ -48,7 +47,6 @@ def run_anonymization(
         gliner_threshold: seuil de confiance GLiNER.
         cleanup_pipes: True pour retirer les `|` parasites entre les mots.
         language: force la langue ('fr', 'en', 'de', 'ja'). Auto si None.
-        repo_root: racine du repo (auto si None).
 
     Returns:
         (MaskedDocument, WrittenOutput, Config)
@@ -60,7 +58,6 @@ def run_anonymization(
     config = load_config(
         profile=profile,
         private_profile=private_profile,
-        repo_root=repo_root,
     )
     log.info("config_loaded", layers=config.layers)
 

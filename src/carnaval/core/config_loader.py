@@ -160,30 +160,32 @@ def _load_directory_layer(dir_path: Path) -> dict[str, Any]:
 # API publique
 # ----------------------------------------------------------------------
 
+# Donnees livrees avec le paquet : src/carnaval/data/
+_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+
 
 def load_config(
     base_dir: Path | str | None = None,
     profile: str | None = None,
     private_profile: str | None = None,
-    repo_root: Path | str | None = None,
+    profiles_dir: Path | str | None = None,
+    private_dir: Path | str | None = None,
 ) -> Config:
     """Charge la config en cascade base -> profile -> private_profile.
 
     Args:
-        base_dir: chemin du dossier `config/` (defaut : <repo>/config).
+        base_dir: dossier `config/` (defaut : config livre avec le paquet).
         profile: nom du profil public a appliquer (ex: 'acknowledge').
         private_profile: nom du profil prive (sous profiles_private/).
-        repo_root: racine du repo (auto-detection par defaut).
+        profiles_dir: dossier des profils publics (defaut : profils livres
+            avec le paquet).
+        private_dir: dossier des profils prives (defaut : ./profiles_private
+            dans le repertoire de travail courant).
 
     Returns:
         Config resolu.
     """
-    if repo_root is None:
-        # racine = parent de src/carnaval/core/
-        repo_root = Path(__file__).resolve().parents[3]
-    repo_root = Path(repo_root)
-
-    base_path = Path(base_dir) if base_dir else repo_root / "config"
+    base_path = Path(base_dir) if base_dir else _DATA_DIR / "config"
 
     layers_loaded: list[str] = []
     merged: dict[str, Any] = {}
@@ -196,7 +198,8 @@ def load_config(
 
     # Couche 2 : profile public
     if profile:
-        prof_path = repo_root / "profiles" / profile
+        prof_base = Path(profiles_dir) if profiles_dir else _DATA_DIR / "profiles"
+        prof_path = prof_base / profile
         prof_layer = _load_directory_layer(prof_path)
         if not prof_layer:
             raise FileNotFoundError(f"Profil introuvable : {prof_path}")
@@ -205,7 +208,8 @@ def load_config(
 
     # Couche 3 : profil prive (optionnel)
     if private_profile:
-        priv_path = repo_root / "profiles_private" / private_profile
+        priv_base = Path(private_dir) if private_dir else Path.cwd() / "profiles_private"
+        priv_path = priv_base / private_profile
         priv_layer = _load_directory_layer(priv_path)
         if not priv_layer:
             raise FileNotFoundError(f"Profil prive introuvable : {priv_path}")

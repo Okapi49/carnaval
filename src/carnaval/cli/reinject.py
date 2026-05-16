@@ -22,14 +22,11 @@ from dotenv import load_dotenv
 from carnaval.core.vault import Vault, VaultError
 from carnaval.stages.s7_reinject import reinject_string
 
-# Racine du depot (4 niveaux au-dessus : cli/ -> carnaval/ -> src/ -> repo).
-_REPO_ROOT = Path(__file__).resolve().parents[3]
-
 DEMO_PASSWORD = "demo_password_change_me_in_prod"
 
 
 def main() -> int:
-    load_dotenv(_REPO_ROOT / ".env")
+    load_dotenv()
 
     parser = argparse.ArgumentParser(
         prog="carnaval-reinject",

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-05-16
+
+### Fixed
+
+- Package data (configuration, business profiles, dictionaries) is now
+  bundled inside the `carnaval` package and resolved relative to it.
+  A `pip install` of Carnaval is now fully functional; previously the
+  configuration and profile loaders assumed a cloned-repository layout
+  and failed when the package was installed as a wheel.
+
+### Changed
+
+- Data files moved under `src/carnaval/data/` (config, profiles,
+  dictionaries).
+- `load_config()` resolves bundled data from the package; the
+  `repo_root` parameter is replaced by explicit `profiles_dir` /
+  `private_dir` overrides.
+- CLI tools resolve `.env` and the default `outbox/` from the current
+  working directory instead of the repository root.
+
 ## [0.1.0] - 2026-05-15
 
 ### Added
@@ -33,5 +53,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Structured logging via structlog.
 - Packaging with hatchling, src layout, Apache-2.0 license.
 
-[Unreleased]: https://example.com/carnaval/compare/v0.1.0...HEAD
-[0.1.0]: https://example.com/carnaval/releases/tag/v0.1.0
+[Unreleased]: https://github.com/carnaval-ai/carnaval/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/carnaval-ai/carnaval/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/carnaval-ai/carnaval/releases/tag/v0.1.0

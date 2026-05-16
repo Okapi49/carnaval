@@ -23,14 +23,11 @@ from dotenv import load_dotenv
 from carnaval.core.logger import configure_logging
 from carnaval.pipeline import run_anonymization
 
-# Racine du depot (4 niveaux au-dessus : cli/ -> carnaval/ -> src/ -> repo).
-_REPO_ROOT = Path(__file__).resolve().parents[3]
-
 DEMO_PASSWORD = "demo_password_change_me_in_prod"
 
 
 def main() -> int:
-    load_dotenv(_REPO_ROOT / ".env")
+    load_dotenv()
 
     parser = argparse.ArgumentParser(
         prog="carnaval-anonymize",
@@ -47,7 +44,7 @@ def main() -> int:
     parser.add_argument(
         "--outbox",
         type=Path,
-        default=_REPO_ROOT / "outbox",
+        default=Path("outbox"),
         help="Dossier de sortie (defaut : ./outbox)",
     )
     parser.add_argument(
@@ -123,7 +120,6 @@ def main() -> int:
             gliner_threshold=args.gliner_threshold,
             cleanup_pipes=args.cleanup_pipes,
             language=args.language,
-            repo_root=_REPO_ROOT,
         )
     except Exception as e:
         print(f"[ERREUR] {type(e).__name__}: {e}", file=sys.stderr)

@@ -1,6 +1,7 @@
 """Tests d'integration sur les profils metier livres.
 
 Verifie que chaque profil livre sait anonymiser sa fixture associee.
+Les profils et leurs fixtures sont embarques dans le paquet.
 """
 
 from __future__ import annotations
@@ -9,10 +10,11 @@ from pathlib import Path
 
 import pytest
 
+import carnaval
 from carnaval.pipeline import run_anonymization
 
 VALID_PWD = "test_password_long_enough_chars"
-_REPO_ROOT = Path(__file__).resolve().parents[2]
+_PROFILES_DIR = Path(carnaval.__file__).resolve().parent / "data" / "profiles"
 
 
 @pytest.fixture
@@ -26,8 +28,7 @@ def outbox_dir(tmp_path: Path) -> Path:
 class TestAcknowledgeProfile:
     def test_masks_organization(self, outbox_dir: Path):
         fixture = (
-            _REPO_ROOT
-            / "profiles"
+            _PROFILES_DIR
             / "acknowledge"
             / "fixtures"
             / "sample_ack_globex.txt"
@@ -38,7 +39,6 @@ class TestAcknowledgeProfile:
             vault_password=VALID_PWD,
             profile="acknowledge",
             use_gliner=False,
-            repo_root=_REPO_ROOT,
         )
         # Globex doit etre masque (deny list)
         assert "Globex Inc." not in masked.anonymized_text
@@ -56,8 +56,7 @@ class TestAcknowledgeProfile:
 class TestInvoiceProfile:
     def test_masks_emitter(self, outbox_dir: Path):
         fixture = (
-            _REPO_ROOT
-            / "profiles"
+            _PROFILES_DIR
             / "invoice"
             / "fixtures"
             / "sample_invoice_initech.txt"
@@ -68,7 +67,6 @@ class TestInvoiceProfile:
             vault_password=VALID_PWD,
             profile="invoice",
             use_gliner=False,
-            repo_root=_REPO_ROOT,
         )
         # Initech doit etre masque
         assert "Initech" not in masked.anonymized_text
@@ -87,7 +85,7 @@ class TestInvoiceProfile:
 class TestEmailProfile:
     def test_masks_contacts(self, outbox_dir: Path):
         fixture = (
-            _REPO_ROOT / "profiles" / "email" / "fixtures" / "sample_email_vandelay.txt"
+            _PROFILES_DIR / "email" / "fixtures" / "sample_email_vandelay.txt"
         )
         masked, _, _ = run_anonymization(
             input_path=fixture,
@@ -95,7 +93,6 @@ class TestEmailProfile:
             vault_password=VALID_PWD,
             profile="email",
             use_gliner=False,
-            repo_root=_REPO_ROOT,
         )
         # Vandelay et emails masques
         assert "Vandelay" not in masked.anonymized_text

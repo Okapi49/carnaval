@@ -1,4 +1,7 @@
-"""Tests d'integration : pipeline complet S1 -> S6 -> S7."""
+"""Tests d'integration : pipeline complet S1 -> S6 -> S7.
+
+Utilise le profil public `acknowledge` livre avec le paquet.
+"""
 
 from __future__ import annotations
 
@@ -27,16 +30,8 @@ Montant : 1200.50 EUR
 
 
 @pytest.fixture
-def fake_repo(tmp_path: Path) -> Path:
-    """Cree un mini repo avec config + profile pour tester."""
-    config = tmp_path / "config"
-    config.mkdir()
-    (config / "pipeline.yaml").write_text("language: fr\n", encoding="utf-8")
-    (config / "deny_lists").mkdir()
-    (config / "deny_lists" / "organizations.yaml").write_text(
-        "organizations:\n  - Globex Inc.\n", encoding="utf-8"
-    )
-
+def workspace(tmp_path: Path) -> Path:
+    """Cree un espace de travail : document a anonymiser + outbox."""
     inbox = tmp_path / "inbox"
     inbox.mkdir()
     sample = inbox / "ack_sample.txt"
@@ -51,14 +46,14 @@ def fake_repo(tmp_path: Path) -> Path:
 
 
 class TestPipelineEndToEnd:
-    def test_runs_without_gliner(self, fake_repo: Path):
-        sample = fake_repo / "inbox" / "ack_sample.txt"
+    def test_runs_without_gliner(self, workspace: Path):
+        sample = workspace / "inbox" / "ack_sample.txt"
         masked, written, cfg = run_anonymization(
             input_path=sample,
-            outbox_dir=fake_repo / "outbox",
+            outbox_dir=workspace / "outbox",
             vault_password=VALID_PWD,
+            profile="acknowledge",
             use_gliner=False,
-            repo_root=fake_repo,
         )
         assert masked.language == "fr"
         assert len(masked.spans) > 0
@@ -71,14 +66,14 @@ class TestPipelineEndToEnd:
         assert "KHZ-DA-032-0050-M" in masked.anonymized_text
         assert "1200" in masked.anonymized_text or "EUR" in masked.anonymized_text
 
-    def test_all_outputs_produced(self, fake_repo: Path):
-        sample = fake_repo / "inbox" / "ack_sample.txt"
+    def test_all_outputs_produced(self, workspace: Path):
+        sample = workspace / "inbox" / "ack_sample.txt"
         _, written, _ = run_anonymization(
             input_path=sample,
-            outbox_dir=fake_repo / "outbox",
+            outbox_dir=workspace / "outbox",
             vault_password=VALID_PWD,
+            profile="acknowledge",
             use_gliner=False,
-            repo_root=fake_repo,
         )
         for path in (
             written.txt_path,
@@ -93,26 +88,26 @@ class TestPipelineEndToEnd:
             assert path.exists(), f"Manquant : {path}"
             assert path.stat().st_size > 0
 
-    def test_organization_from_config_masked(self, fake_repo: Path):
-        sample = fake_repo / "inbox" / "ack_sample.txt"
+    def test_organization_masked(self, workspace: Path):
+        sample = workspace / "inbox" / "ack_sample.txt"
         masked, _, _ = run_anonymization(
             input_path=sample,
-            outbox_dir=fake_repo / "outbox",
+            outbox_dir=workspace / "outbox",
             vault_password=VALID_PWD,
+            profile="acknowledge",
             use_gliner=False,
-            repo_root=fake_repo,
         )
-        # Globex Inc. (deny list) doit etre masque
+        # Globex Inc. (deny list du profil) doit etre masque
         assert "Globex Inc." not in masked.anonymized_text
 
-    def test_roundtrip_via_reinjection(self, fake_repo: Path):
-        sample = fake_repo / "inbox" / "ack_sample.txt"
+    def test_roundtrip_via_reinjection(self, workspace: Path):
+        sample = workspace / "inbox" / "ack_sample.txt"
         masked, written, _ = run_anonymization(
             input_path=sample,
-            outbox_dir=fake_repo / "outbox",
+            outbox_dir=workspace / "outbox",
             vault_password=VALID_PWD,
+            profile="acknowledge",
             use_gliner=False,
-            repo_root=fake_repo,
         )
 
         # Charger le JSON produit et le passer dans reinject
@@ -131,14 +126,14 @@ class TestPipelineEndToEnd:
         assert "FR66529268393" in restored
         assert "Globex Inc." in restored
 
-    def test_meta_no_sensitive_leak(self, fake_repo: Path):
-        sample = fake_repo / "inbox" / "ack_sample.txt"
+    def test_meta_no_sensitive_leak(self, workspace: Path):
+        sample = workspace / "inbox" / "ack_sample.txt"
         _, written, _ = run_anonymization(
             input_path=sample,
-            outbox_dir=fake_repo / "outbox",
+            outbox_dir=workspace / "outbox",
             vault_password=VALID_PWD,
+            profile="acknowledge",
             use_gliner=False,
-            repo_root=fake_repo,
         )
         meta = written.meta_path.read_text(encoding="utf-8")
         # Aucune valeur sensible ne doit apparaitre dans le meta
