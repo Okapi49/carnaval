@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: AUBERT
     given-names: Patrice
-repository-code: "https://github.com/Okapi49/carnaval"
+repository-code: "https://github.com/carnaval-ai/carnaval"
 abstract: >-
   Carnaval is an open-source Python framework for reversible PII
   anonymization. It masks sensitive entities in text documents before
