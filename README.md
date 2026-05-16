@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/carnaval-mask.svg" width="240" alt="Carnaval mask">
+  <img src="https://raw.githubusercontent.com/carnaval-ai/carnaval/main/assets/carnaval-mask.svg" width="240" alt="Carnaval mask">
 </p>
 
 <h1 align="center">Carnaval</h1>
@@ -7,7 +7,8 @@
 <p align="center"><em>The art of the mask - hide the identity, keep the meaning.</em></p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
+  <a href="https://pypi.org/project/carnaval/"><img src="https://img.shields.io/pypi/v/carnaval.svg" alt="PyPI version"></a>
+  <a href="https://github.com/carnaval-ai/carnaval/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://doi.org/10.5281/zenodo.20219604"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.20219604.svg" alt="DOI"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+">
   <img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" alt="Tests">
@@ -65,8 +66,8 @@ coherent, structured document it can reason about.
   per-client profiles kept out of version control.
 - **8 output formats** - TXT, JSON, JSONL, XML, CoNLL, HTML, encrypted vault,
   audit metadata - all produced in a single pass.
-- **CLI and library** - use the `anonymize.py` / `reinject.py` scripts, or
-  import `carnaval` directly into your Python code.
+- **CLI and library** - use the `carnaval-anonymize` / `carnaval-reinject`
+  commands, or import `carnaval` directly into your Python code.
 
 ---
 
@@ -83,7 +84,7 @@ TXT ──▶ S1 Intake ──▶ S2 Preprocess ──▶ S3 Detect ──▶ S4
 JSON / XML ──▶ S7 Reinject ──▶ JSON / XML with original values restored
 ```
 
-See [Architecture](wiki/Architecture.md) for details on each stage.
+See [Architecture](https://github.com/carnaval-ai/carnaval/wiki/Architecture) for details on each stage.
 
 ---
 
@@ -92,7 +93,29 @@ See [Architecture](wiki/Architecture.md) for details on each stage.
 Requires **Python 3.11+** (tested on 3.13).
 
 ```bash
-git clone <repository-url>
+pip install carnaval
+```
+
+This installs the core library and the `carnaval-anonymize` and
+`carnaval-reinject` command-line tools.
+
+The optional zero-shot neural recognizer (GLiNER) is **not** installed by
+default - it pulls in PyTorch. Enable it with the `ai` extra:
+
+```bash
+pip install "carnaval[ai]"
+```
+
+The GLiNER model (~500 MB) is then downloaded automatically on first use;
+afterwards Carnaval works fully offline. See the
+[Installation guide](https://github.com/carnaval-ai/carnaval/wiki/Installation) for an offline / air-gapped setup.
+
+### From source
+
+To work on Carnaval itself:
+
+```bash
+git clone https://github.com/carnaval-ai/carnaval.git
 cd carnaval
 
 python -m venv .venv
@@ -104,18 +127,11 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-The neural recognizer (GLiNER) is included in `requirements.txt`. The model
-(~500 MB) is downloaded automatically on first use; afterwards Carnaval works
-fully offline. See the [Installation guide](wiki/Installation.md) for an
-offline / air-gapped setup.
-
 ### Configure the vault password
 
-```bash
-cp .env.example .env
-```
-
-Then edit `.env` and set a strong secret (16 characters minimum, 32+ recommended):
+Carnaval reads the vault password from a `.env` file in your working
+directory. Create one and set a strong secret (16 characters minimum,
+32+ recommended):
 
 ```
 CARNAVAL_VAULT_PASSWORD=a-strong-randomly-generated-secret
@@ -127,15 +143,15 @@ CARNAVAL_VAULT_PASSWORD=a-strong-randomly-generated-secret
 
 ```bash
 # 1. Anonymize a document
-python anonymize.py inbox/order.txt --profile acknowledge
+carnaval-anonymize inbox/order.txt --profile acknowledge
 
 # 2. Send outbox/txt/order_anonymise.txt to your LLM, collect a JSON response
 
 # 3. Re-inject the real values into the LLM response
-python reinject.py response.json --vault outbox/vault/order_vault.enc
+carnaval-reinject response.json --vault outbox/vault/order_vault.enc
 ```
 
-`anonymize.py` produces, in one pass, all 8 output files under `outbox/`
+`carnaval-anonymize` produces, in one pass, all 8 output files under `outbox/`
 (`txt/`, `json/`, `jsonl/`, `xml/`, `conll/`, `html/`, `vault/`, `meta/`).
 
 Useful flags: `--no-gliner` (regex + deny lists only, faster),
@@ -178,7 +194,7 @@ restored = reinject_json_data(llm_response, vault)
 # {"supplier": "Globex Inc.", "contact": "Jane Doe"}
 ```
 
-See the [Quickstart](wiki/Quickstart.md) and [Reinjection](wiki/Reinjection.md)
+See the [Quickstart](https://github.com/carnaval-ai/carnaval/wiki/Quickstart) and [Reinjection](https://github.com/carnaval-ai/carnaval/wiki/Reinjection)
 wiki pages for more.
 
 ---
@@ -198,7 +214,7 @@ The placeholder ↔ value mapping is stored in an encrypted vault:
 Without the password, the vault is unreadable. Carnaval makes **no outbound
 network calls** once the GLiNER model has been downloaded, and its structured
 logger redacts sensitive keys by default. It supports GDPR-style
-**pseudonymization** (Article 4.5). See [Vault and Security](wiki/Vault-and-Security.md).
+**pseudonymization** (Article 4.5). See [Vault and Security](https://github.com/carnaval-ai/carnaval/wiki/Vault-and-Security).
 
 ---
 
@@ -206,7 +222,7 @@ logger redacts sensitive keys by default. It supports GDPR-style
 
 French (FR), English (EN), German (DE), Spanish (ES), Italian (IT) and
 Portuguese (PT). The language is auto-detected; mixed-language documents are
-handled via in-text linguistic markers. See [Multilingual](wiki/Multilingual.md).
+handled via in-text linguistic markers. See [Multilingual](https://github.com/carnaval-ai/carnaval/wiki/Multilingual).
 
 ---
 
@@ -228,29 +244,29 @@ pytest --cov=src/carnaval    # with coverage
 
 ## Documentation
 
-The complete reference lives in the **[project wiki](wiki/Home.md)**:
+The complete reference lives in the **[project wiki](https://github.com/carnaval-ai/carnaval/wiki/Home)**:
 
-- [Home](wiki/Home.md) - overview and table of contents
-- [Installation](wiki/Installation.md)
-- [Quickstart](wiki/Quickstart.md)
-- [Architecture](wiki/Architecture.md)
-- [Vault and Security](wiki/Vault-and-Security.md)
-- [Profiles](wiki/Profiles.md)
-- [Recognizers](wiki/Recognizers.md)
-- [Multilingual](wiki/Multilingual.md)
-- [Output Formats](wiki/Output-Formats.md)
-- [Reinjection](wiki/Reinjection.md)
-- [Troubleshooting](wiki/Troubleshooting.md)
-- [Contributing](wiki/Contributing.md)
+- [Home](https://github.com/carnaval-ai/carnaval/wiki/Home) - overview and table of contents
+- [Installation](https://github.com/carnaval-ai/carnaval/wiki/Installation)
+- [Quickstart](https://github.com/carnaval-ai/carnaval/wiki/Quickstart)
+- [Architecture](https://github.com/carnaval-ai/carnaval/wiki/Architecture)
+- [Vault and Security](https://github.com/carnaval-ai/carnaval/wiki/Vault-and-Security)
+- [Profiles](https://github.com/carnaval-ai/carnaval/wiki/Profiles)
+- [Recognizers](https://github.com/carnaval-ai/carnaval/wiki/Recognizers)
+- [Multilingual](https://github.com/carnaval-ai/carnaval/wiki/Multilingual)
+- [Output Formats](https://github.com/carnaval-ai/carnaval/wiki/Output-Formats)
+- [Reinjection](https://github.com/carnaval-ai/carnaval/wiki/Reinjection)
+- [Troubleshooting](https://github.com/carnaval-ai/carnaval/wiki/Troubleshooting)
+- [Contributing](https://github.com/carnaval-ai/carnaval/wiki/Contributing)
 
-The original design notes are kept under [`docs/`](docs/).
+The original design notes are kept under [`docs/`](https://github.com/carnaval-ai/carnaval/tree/main/docs).
 
 ---
 
 ## Contributing
 
-Contributions are welcome - see [CONTRIBUTING.md](CONTRIBUTING.md) and our
-[Code of Conduct](CODE_OF_CONDUCT.md). Please use only fictitious entities
+Contributions are welcome - see [CONTRIBUTING.md](https://github.com/carnaval-ai/carnaval/blob/main/CONTRIBUTING.md) and our
+[Code of Conduct](https://github.com/carnaval-ai/carnaval/blob/main/CODE_OF_CONDUCT.md). Please use only fictitious entities
 (Acme Corp, Globex, Jane Doe, Springfield...) in public fixtures and examples.
 
 ## Contact & Security
@@ -258,7 +274,7 @@ Contributions are welcome - see [CONTRIBUTING.md](CONTRIBUTING.md) and our
 - General questions, conduct reports: **carnaval.oss@gmail.com**
 - Bug reports and feature requests: GitHub issues
 - Security vulnerabilities: please **do not** open a public issue - see
-  [SECURITY.md](SECURITY.md) for responsible disclosure.
+  [SECURITY.md](https://github.com/carnaval-ai/carnaval/blob/main/SECURITY.md) for responsible disclosure.
 
 ## Citation
 
@@ -267,9 +283,9 @@ If you use Carnaval in your work, please cite it via its archived DOI:
 > Patrice AUBERT. *Carnaval: a reversible PII anonymization framework.*
 > 2026. DOI: [10.5281/zenodo.20219604](https://doi.org/10.5281/zenodo.20219604)
 
-A machine-readable [`CITATION.cff`](CITATION.cff) is included - GitHub turns it
+A machine-readable [`CITATION.cff`](https://github.com/carnaval-ai/carnaval/blob/main/CITATION.cff) is included - GitHub turns it
 into a **"Cite this repository"** button.
 
 ## License
 
-Carnaval is released under the **Apache License 2.0**. See [LICENSE](LICENSE).
+Carnaval is released under the **Apache License 2.0**. See [LICENSE](https://github.com/carnaval-ai/carnaval/blob/main/LICENSE).

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-05-16
+
+### Changed
+
+- README updated for PyPI installation: `pip install carnaval` is now the
+  primary install method, the `carnaval-anonymize` / `carnaval-reinject`
+  commands replace the old script invocations, and all internal links use
+  absolute GitHub URLs so they render correctly on the PyPI project page.
+
 ## [0.1.1] - 2026-05-16
 
 ### Fixed
@@ -53,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Structured logging via structlog.
 - Packaging with hatchling, src layout, Apache-2.0 license.
 
-[Unreleased]: https://github.com/carnaval-ai/carnaval/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/carnaval-ai/carnaval/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/carnaval-ai/carnaval/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/carnaval-ai/carnaval/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/carnaval-ai/carnaval/releases/tag/v0.1.0
